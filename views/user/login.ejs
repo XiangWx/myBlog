@@ -46,5 +46,27 @@
       </div>
                
     </form>
+    <script>
+    $(function(){
+     $('#form').on('submit',function(){
+      $.ajax({
+        url:'/login',
+        type:'post',
+        data:$('form').serialize(),
+        success:(res)=>{
+          alert(res.msg)
+          location.href='/index'
+        },
+        error:(res)=>{
+          alert('错误')
+        }
+      
+      })
+      return false
+     })
+    })
+  
+    
+    </script>
 </body>
 </html>

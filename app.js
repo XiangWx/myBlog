@@ -52,7 +52,7 @@ app.post('/register',(req,res)=>{
     //执行sql语句 查询用户名之前是否注册过
     const sql1 = 'select count(*) as count  from user where username=?'
     conn.query(sql1,userInfo.username,(err,result)=>{
-          console.log(result[0].count) //设置提交时间 导入moment
+        //   console.log(result[0].count) //设置提交时间 导入moment
             userInfo.ctime = moment().format('YYYY-MM-DD hh:mm:ss')
             if(err) return res.status(500).send({msg:'查询失败，请重试！',status:500})
 
@@ -69,6 +69,16 @@ app.post('/register',(req,res)=>{
     })
 })
 
+//登陆
+app.post('/login',(req,res)=>{
+    //用户登陆的时候 需要去数据库查询用户名和密码是否匹配
+    const sql3 = 'select * from user where username=? and password=?'
+    conn.query(sql3,[req.body.username,req.body.password],(err,result)=>{
+        //如果有报错或者查询结果为空 都是无法登陆的
+        if(err || result.length == 0)  return res.status(400).send({msg:'登陆失败，请重试！',status:400})
+        res.send({msg:'登陆成功',status:200})
+    })
+})
 app.listen(8080,()=>{
     console.log('running at http://127.0.0.1:8080')
 })
