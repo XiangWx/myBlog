@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>注册</title>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script src='/node_modules/jquery/dist/jquery.min.js'></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</head>
+<style>
+    #form {
+      width: 400px;
+      margin: 0 auto;
+      margin-top: 100px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    input[type='submit'] {
+      width: 100%;
+    }
+  </style>
+<body>
+    <form  id="form">
+        <h1>注册页面</h1>
+      <div class="form-group">
+        <input type="text" class="form-control" id="username" name='username' placeholder="用户名" required>
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" id="password" name="password" placeholder="密码" required>
+      </div>
+      <div class="form-group">
+          <input type="text" class="form-control" id="nickname" name="nickname" placeholder="昵称" required>
+        </div>
+ 
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary btn-lg"  value="注册新用户">
+        </div>
+               
+    </form>
+    <script>
+    $(function(){
+      $('#form').on('submit',function(){
+        $.ajax({
+          url:'/register',
+          type:'post',
+          data:$('form').serialize(),
+          success:(res)=>{
+            alert('注册成功')
+            location.href='/login'
+          }
+        })
+        return false
+      })
+    })
+    </script>
+</body>
+</html>
