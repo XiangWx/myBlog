@@ -35,7 +35,7 @@
         <input type="password" class="form-control" id="password" name="password" placeholder="密码" required>
       </div>
       <div class="form-group">
-          <input type="password" class="form-control" id="nickname" name="nickname" placeholder="昵称" required>
+          <input type="text" class="form-control" id="nickname" name="nickname" placeholder="昵称" required>
         </div>
  
         <div class="form-group">
@@ -43,5 +43,21 @@
         </div>
                
     </form>
+    <script>
+    $(function(){
+      $('#form').on('submit',function(){
+        $.ajax({
+          url:'/register',
+          type:'post',
+          data:$('form').serialize(),
+          success:(res)=>{
+            alert('注册成功')
+            location.href='/login'
+          }
+        })
+        return false
+      })
+    })
+    </script>
 </body>
 </html>
