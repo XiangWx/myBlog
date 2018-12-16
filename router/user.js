@@ -13,5 +13,7 @@ router.get('/login',ctr.getLoginHandle)
 router.post('/register',ctr.postRegisterHandle)
 //登陆
 router.post('/login',ctr.postLoginHandle)
+//注销退出
+router.get('/logout',ctr.getLogoutHandle)
 
 module.exports = router

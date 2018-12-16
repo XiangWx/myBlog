@@ -52,7 +52,21 @@ module.exports = {
         conn.query(sql3,[req.body.username,req.body.password],(err,result)=>{
             //如果有报错或者查询结果为空 都是无法登陆的
             if(err || result.length == 0)  return res.status(400).send({msg:'登陆失败，请重试！',status:400})
+          
+            //登陆成功之后 数据存储在session中
+            //console.log(req.session)
+            req.session.userItem = result[0]
+            //判断是否登陆 true为已经登陆
+            req.session.isLogin = true
+
             res.send({msg:'登陆成功',status:200})
+        })
+    },
+    getLogoutHandle:(req,res)=>{
+        req.session.destroy((err) => {
+            // res.send({msg:'退出成功', status:200})
+            //重定向
+            res.redirect('/')
         })
     }
 
