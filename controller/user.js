@@ -1,12 +1,8 @@
+const conn = require('../db/index')
 const moment = require('moment')
-const mysql = require('mysql')
-//连接数据库
-const conn = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
-    database: 'blog'
-  })
+//内置加密模块
+const bcrypt = require('bcryptjs')
+
 
 module.exports = {
     getRegisterHandle:(req,res)=>{
@@ -23,17 +19,24 @@ module.exports = {
         if(userInfo.username.trim().length<=0 || userInfo.password.trim().length<=0 || userInfo.nickname.trim().length<=0){
             return res.send({msg:'请填写完整的注册信息！',status:500})
         }
-    //  console.log(userInfo)
+   
         //执行sql语句 查询用户名之前是否注册过
         const sql1 = 'select count(*) as count  from user where username=?'
         conn.query(sql1,userInfo.username,(err,result)=>{
             //   console.log(result[0].count) 
-            //设置提交时间 导入moment
-                userInfo.ctime = moment().format('YYYY-MM-DD hh:mm:ss')
+                
                 if(err) return res.status(500).send({msg:'查询失败，请重试！',status:500})
                 //查重  result[0].count=0 说明没被注册
                 if(result[0].count !=0) return res.status(500).send({msg:'用户名已重复，请重新输入',status:500})
     
+                //设置提交时间 导入moment
+                userInfo.ctime = moment().format('YYYY-MM-DD hh:mm:ss')
+                //密码进行加密 再保存到数据库
+                const  salt  = bcrypt.genSaltSync(10)
+                //对密码进行加密
+                const  hash  = bcrypt.hashSync(userInfo.password,salt); 
+                //加密之后的密码再赋值给password
+                userInfo.password = hash
             //执行下面说明没有被注册过
            
             const sql2 = 'insert into user set ?'
@@ -55,7 +58,12 @@ module.exports = {
           
             //登陆成功之后 数据存储在session中
             //console.log(req.session)
-            req.session.userItem = result[0]
+
+            //保存到数据是加密处理之后的密码
+            //使用bcrypt进行验证
+            if(bcrypt.compareSync(req.body.password,result[0].password)) return res.status(400).send({ status: 400, msg: '登录失败!请重试!' }) 
+
+            req.session.userInfo = result[0]
             //判断是否登陆 true为已经登陆
             req.session.isLogin = true
 

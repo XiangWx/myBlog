@@ -10,11 +10,21 @@
     <script src='/node_modules/bootstrap/dist/js/bootstrap.min.js'></script>
 </head>
 <body>
-    <h1>个人博客</h1>
+    
+   
     <nav class="navbar navbar-default">
         <div class="container-fluid">
           <!-- Brand and toggle get grouped for better mobile display -->
-          
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/">我的博客</a>
+            </div>
       
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -30,7 +40,7 @@
             
              <!-- 已登陆注销 -->
              <div class="navbar-form nav navbar-nav navbar-right">
-                <button class="btn btn-warning">欢迎<%= userItem.nickname%>登陆 </button>
+                <button class="btn btn-warning">欢迎<%= userInfo.nickname%>登陆 </button>
                 <a class="btn btn-danger" href="/logout">注销 </a>
            </div>
            

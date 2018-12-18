@@ -8,6 +8,10 @@
   <h1>发表文章页</h1>
   <hr>
   <form id="form">
+    <!-- 隐藏域 页面一加载的时候 就把作者的id传过去但是容易出问题不常用 
+      因为如果用户同时开了两个网页 其中一个网页已经退出了 但是另外一个网页写文章依然可以提交 不合常理
+      -->
+  
     <div class="form-group">
       <label>文章标题：</label>
       <input type="text" name="title" class="form-control" required>
@@ -27,14 +31,32 @@
 <script>
 
   $(function () {
+    //初始化文章部分的编辑器
     var mditor = Mditor.fromTextarea(document.getElementById('editor'));
 
     //获取或设置编辑器的值
     mditor.on('ready', function () {
-      console.log(mditor.value);
+      //console.log(mditor.value);
       // mditor.value = '** hello **';
       // mditor.fullscreen = true
     });
+
+    //发送ajax请求 携带前端用户的表单数据
+   $('#form').on('submit',function(){
+    $.ajax({
+      url:'/article/add',
+      type:'post',
+      data: $('#form').serialize(),
+      success:function(res){
+        alert(res.msg)
+        if(res.status==200){
+          location.href = '/article/info/'+res.articleId
+        }
+      }
+
+    })
+    return false //阻止表单的默认提交
+   })
   })
 
 </script>

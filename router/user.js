@@ -8,6 +8,7 @@ const ctr = require('../controller/user.js')
 router.get('/register',ctr.getRegisterHandle)
 router.get('/login',ctr.getLoginHandle)
 
+router.get('/login/reauth', ctr.getLoginHandle)
 //客户端发送请求
 //注册
 router.post('/register',ctr.postRegisterHandle)

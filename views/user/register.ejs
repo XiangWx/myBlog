@@ -49,12 +49,18 @@
         $.ajax({
           url:'/register',
           type:'post',
-          data:$('form').serialize(),
+          data:$('#form').serialize(),
           success:(res)=>{
             alert('注册成功')
             location.href='/login'
+          },
+          error:function(err){
+            //console.log(err)
+            alert(err.responseJSON.msg)
           }
+
         })
+
         return false
       })
     })
