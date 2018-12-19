@@ -1,5 +1,7 @@
 <%- include('../common/header.ejs')%>
+<link rel="stylesheet" href="/node_modules/mditor/dist/css/mditor.min.css">
 
+<script src="/node_modules/mditor/dist/js/mditor.min.js"></script>
 
 <div class="container">
     <h1>文章编辑页</h1>
@@ -18,7 +20,7 @@
       </div>
   
       <div class="form-group">
-        <input type="submit" value="发表文章" class="btn btn-primary">
+        <input type="submit" value="保存文章" class="btn btn-primary">
       </div>
     </form>
   </div>
@@ -34,7 +36,7 @@
           type:'post',
           data:$('#form').serialize(),
           success:function(res){
-            alert(res.msg)
+            //alert(res.msg)
              if(res.status == 200) {
              location.href = '/article/info/'+location.pathname.split('/').pop()
             }

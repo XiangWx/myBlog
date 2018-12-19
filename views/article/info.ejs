@@ -4,7 +4,10 @@
 <div class="container">
   <h1 class="text-center">
     <%= articleInfo.title %>
-    <% if (isLogin && userInfo.id === articleInfo.author_id) { %>
+    <!-- <%= isLogin%>
+    <%= userInfo.id %>
+    <%= articleInfo.authorld %> -->
+    <% if (isLogin && userInfo.id === articleInfo.authorld) { %>
       <a href="/article/edit/<%= articleInfo.id %>" class="btn btn-info pull-right">编辑</a>
     <% } %>
   </h1>

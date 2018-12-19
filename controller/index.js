@@ -17,7 +17,7 @@ module.exports = {
 
 
         conn.query(sql,(currentPage-1)*pageSize,(err,result)=>{
-            console.log(result)
+            //console.log(result)
             if(err) return res.send(err.message)
             //同时执行两条sql语句 得到一个数组 result[0] result[1]
             //文章得总条数
@@ -28,7 +28,7 @@ module.exports = {
             res.render('index.ejs',{
                 isLogin:req.session.isLogin,
                 userInfo:req.session.userInfo,
-                articleInfos:result[0],
+                articleInfo:result[0],
                 totalPage,
                 currentPage
 

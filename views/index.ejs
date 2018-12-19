@@ -4,8 +4,8 @@
 <%- include('./common/header.ejs') %>
 <h1>文章页</h1>
 <div class="list-group" style="margin: 10px;">
-    <% articleInfos.forEach(item => { %>
-    <a href="/article/info.ejs/<%= item.id %>" class="list-group-item">
+    <% articleInfo.forEach(item => { %>
+    <a href="/article/info/<%= item.id %>" class="list-group-item">
       <%= item.title %>
       <span class="badge hidden-xs" style="background-color: #5bc0de;">发表时间：
         <%= item.ctime %> </span>
@@ -24,6 +24,7 @@
       <li class="<%= currentPage === (i+1) ? 'active' : '' %>"><a href="?page=<%= i+1 %>">
           <%= i+1 %></a></li>
       <% } %>
+      <%= totalPage%>
       <li class="<%= currentPage+1 > totalPage ? 'disabled' : ''  %>">
           <span aria-hidden="true">&raquo;</span>
       </li>
